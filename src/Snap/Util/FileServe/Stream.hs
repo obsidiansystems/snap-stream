@@ -1,3 +1,15 @@
+{-|
+Description:
+  Handler for HTTP range requests
+
+HTTP range requests include a header specifying the range of bytes expected in
+the response. For example:
+
+> Range: bytes=0-1023
+
+See this <https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests
+documentation> for more details on range requests.
+-}
 {-# LANGUAGE BangPatterns        #-}
 {-# LANGUAGE CPP                 #-}
 {-# LANGUAGE OverloadedStrings   #-}
@@ -24,12 +36,22 @@ import System.IO.Streams (OutputStream)
 
 
 ------------------------------------------------------------------------------
--- | Same as 'serveFile', with control over the MIME mapping used and streamed
+-- | Serves a file, with support for range requests and explicit mime type
+-- specification.
+--
+-- This function can be used in the presence or absence of @Range@ headers: it
+-- can be used to serve partial files and whole files.
+--
+-- Similar to 'serveFile'.
 serveStreamAs :: MonadSnap m
-              => ByteString        -- ^ MIME type
+              => ByteString
+              -- ^ MIME type
               -> Word64
+              -- ^ The size of the file being streamed
               -> (Word64 -> Word64 -> OutputStream Builder -> IO ())
+              -- ^ If a partial range is requested, this function is used to send that range.
               -> (OutputStream Builder -> IO ())
+              -- ^ If a partial range is not requested, this function is used to send the whole file.
               -> m ()
 serveStreamAs mime sz stream streamAll = do
     reqOrig <- getRequest
