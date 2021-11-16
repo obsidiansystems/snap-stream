@@ -14,8 +14,6 @@ documentation> for more details on range requests.
 {-# LANGUAGE CPP                 #-}
 {-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-
--- | Contains web handlers to stream files
 module Snap.Util.FileServe.Stream where
 
 ------------------------------------------------------------------------------
