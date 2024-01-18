@@ -1,5 +1,5 @@
 name:               snap-stream
-version:            0.1.1.0
+version:            0.1.1.1
 synopsis:           Streaming Snap handlers
 description:        Snap handlers for streaming access with range requests
 license:            BSD3
@@ -17,8 +17,8 @@ extra-source-files:
 library
   hs-source-dirs:   src
   build-depends:
-      attoparsec  >=0.13 && <0.14
-    , base        >=4.9  && <4.15
+      attoparsec  >=0.13 && <0.15
+    , base        >=4.9  && <4.16
     , bytestring  >=0.10 && <0.11
     , io-streams  >=1.4  && <1.6
     , snap-core   >=1.0  && <1.1
